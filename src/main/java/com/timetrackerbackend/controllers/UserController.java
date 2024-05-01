@@ -6,7 +6,7 @@ import com.timetrackerbackend.models.*;
 import com.timetrackerbackend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://localhost:8080")
+@CrossOrigin("*")
 @RestController
 public class UserController {
     private UserService userService;
