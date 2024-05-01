@@ -1,13 +1,10 @@
 package com.timetrackerbackend.services;
 
 import java.util.List;
+import com.timetrackerbackend.models.*;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.*;
 import org.springframework.stereotype.Service;
-import com.mongodb.client.result.DeleteResult;
-
-import com.timetrackerbackend.models.User;
 
 @Service
 public class UserService {
@@ -33,16 +30,16 @@ public class UserService {
     // null. Ingen ny användare skapas.
     public User setUser(User user) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(user.getUsername()));
+        query.addCriteria(Criteria.where("username").is(user.username));
         return mongoOperations.findOne(query, User.class) != null ? null : mongoOperations.insert(user);
     }
 
-    // Tar bort angiven användare. Försöker man ta bort admin så returneras null.
-    // Samma sak om man förösker ta bort en användare som inte existerar.
-    public DeleteResult deleteUser(String username) {
+    // Spara ändringar för en användares uppgifter.
+    public User editUser(String username, List<Task> tasks) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        System.out.println(username);
-        return username.equals("admin") ? null : mongoOperations.remove(query, User.class);
+        Update update = Update.update("tasks", tasks);
+        mongoOperations.updateFirst(query, update, User.class);
+        return mongoOperations.findOne(query, User.class);
     }
 }
