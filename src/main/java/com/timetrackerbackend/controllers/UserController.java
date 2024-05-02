@@ -5,7 +5,7 @@ import com.timetrackerbackend.models.*;
 import com.timetrackerbackend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("https://backend-eft68.ondigitalocean.app")
+@CrossOrigin("https://frontend-bt37r.ondigitalocean.app")
 @RestController
 public class UserController {
     private UserService userService;
