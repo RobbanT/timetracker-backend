@@ -1,12 +1,11 @@
 package com.timetrackerbackend.controllers;
 
 import java.util.List;
-
 import com.timetrackerbackend.models.*;
 import com.timetrackerbackend.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
+@CrossOrigin("https://backend-eft68.ondigitalocean.app")
 @RestController
 public class UserController {
     private UserService userService;

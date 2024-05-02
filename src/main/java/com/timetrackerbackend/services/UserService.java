@@ -38,8 +38,7 @@ public class UserService {
     public User editUser(String username, List<Task> tasks) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        Update update = Update.update("tasks", tasks);
-        mongoOperations.updateFirst(query, update, User.class);
+        mongoOperations.updateFirst(query, Update.update("tasks", tasks), User.class);
         return mongoOperations.findOne(query, User.class);
     }
 }
