@@ -3,6 +3,9 @@ package com.timetrackerbackend.controllers;
 import java.util.List;
 import com.timetrackerbackend.models.*;
 import com.timetrackerbackend.services.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("https://frontend-bt37r.ondigitalocean.app")
@@ -13,6 +16,9 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     @GetMapping("/users")
     public List<User> getUsers() {
@@ -26,6 +32,7 @@ public class UserController {
 
     @PostMapping("/user")
     public User setUser(@RequestBody User user) {
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userService.setUser(user);
     }
 
