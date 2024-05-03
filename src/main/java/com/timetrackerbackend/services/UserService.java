@@ -2,14 +2,18 @@ package com.timetrackerbackend.services;
 
 import java.util.List;
 import com.timetrackerbackend.models.*;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     private final MongoOperations mongoOperations;
+
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     public UserService(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
@@ -32,6 +36,7 @@ public class UserService {
     public User setUser(User user) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(user.username));
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return mongoOperations.findOne(query, User.class) != null ? null : mongoOperations.insert(user);
     }
 
