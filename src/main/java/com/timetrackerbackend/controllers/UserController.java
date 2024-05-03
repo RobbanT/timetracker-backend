@@ -19,9 +19,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/user/{username}")
-    public User getUser(@PathVariable String username) {
-        return userService.getUser(username);
+    @GetMapping("/user/{username}/{password}")
+    public User getUser(@PathVariable String username, @PathVariable String password) {
+        return userService.getUser(username, password);
     }
 
     @PostMapping("/user")

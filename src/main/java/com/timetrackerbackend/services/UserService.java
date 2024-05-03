@@ -25,10 +25,13 @@ public class UserService {
     }
 
     // Returnerar angiven användare. Finns ingen användare returnerar vi null.
-    public User getUser(String username) {
+    public User getUser(String username, String password) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        return mongoOperations.findOne(query, User.class);
+        return mongoOperations.findOne(query, User.class) != null
+                && bcryptEncoder.matches(password, mongoOperations.findOne(query, User.class).getPassword())
+                        ? mongoOperations.findOne(query, User.class)
+                        : null;
     }
 
     // Finns det redan en användare med ett visst användarnamn? Då returnerar vi
@@ -44,7 +47,6 @@ public class UserService {
     public User editUser(String username, List<Task> tasks) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-
         // Kontrollerar så att det inte finns tasks med samma titel.
         for (Task task1 : tasks) {
             int count = 0;
@@ -56,7 +58,6 @@ public class UserService {
                 }
             }
         }
-
         mongoOperations.updateFirst(query, Update.update("tasks", tasks), User.class);
         return mongoOperations.findOne(query, User.class);
     }
