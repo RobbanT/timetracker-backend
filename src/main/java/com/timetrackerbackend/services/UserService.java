@@ -19,7 +19,7 @@ public class UserService {
         this.mongoOperations = mongoOperations;
     }
 
-    // Returnerar alla användare.
+    // Returnerar alla användare!
     public List<User> getUsers() {
         return mongoOperations.findAll(User.class);
     }
