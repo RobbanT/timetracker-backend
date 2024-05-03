@@ -38,6 +38,19 @@ public class UserService {
     public User editUser(String username, List<Task> tasks) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
+
+        // Kontrollerar så att det inte finns tasks med samma titel.
+        for (Task task1 : tasks) {
+            int count = 0;
+            for (Task task2 : tasks) {
+                if (task1.getTitle().equals(task2.getTitle())) {
+                    if (++count > 1) {
+                        return null;
+                    }
+                }
+            }
+        }
+
         mongoOperations.updateFirst(query, Update.update("tasks", tasks), User.class);
         return mongoOperations.findOne(query, User.class);
     }
