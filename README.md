@@ -2,4 +2,4 @@
 
 ![](time-tracker.png)
 
-### [Time Tracker](https://frontend-bt37r.ondigitalocean.app)
+### Länk till projektet: [Time Tracker](https://frontend-bt37r.ondigitalocean.app).
