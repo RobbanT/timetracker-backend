@@ -29,8 +29,8 @@ public class UserController {
         return userService.setUser(user);
     }
 
-    @PatchMapping("/user/{username}")
-    public User editUser(@PathVariable String username, @RequestBody List<Task> tasks) {
+    @PatchMapping("/user/")
+    public User editUser(@RequestBody User user) {
         System.out.println("hej");
         return null;
         // return userService.editUser(username, tasks);
