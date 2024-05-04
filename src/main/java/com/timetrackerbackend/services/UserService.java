@@ -44,14 +44,14 @@ public class UserService {
     }
 
     // Spara ändringar för en användares uppgifter.
-    public User editUser(String username, List<Task> tasks) {
+    public User editUser(User user) {
         Query query = new Query();
         System.out.println("hej");
-        query.addCriteria(Criteria.where("username").is(username));
+        query.addCriteria(Criteria.where("username").is(user.username));
         // Kontrollerar så att det inte finns tasks med samma titel.
-        for (Task task1 : tasks) {
+        for (Task task1 : user.getTasks()) {
             int count = 0;
-            for (Task task2 : tasks) {
+            for (Task task2 : user.getTasks()) {
                 if (task1.getTitle().equals(task2.getTitle())) {
                     if (++count > 1) {
                         return null;
@@ -59,7 +59,7 @@ public class UserService {
                 }
             }
         }
-        mongoOperations.updateFirst(query, Update.update("tasks", tasks), User.class);
+        mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
         return mongoOperations.findOne(query, User.class);
     }
 }
