@@ -29,7 +29,7 @@ public class UserController {
         return userService.setUser(user);
     }
 
-    @PatchMapping("/users")
+    @PatchMapping("/user")
     public User editUser(@RequestBody User user) {
         System.out.println(user.username);
         return null;
