@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @PatchMapping("/user/{username}")
-    public User editUser(@PathVariable String username, @RequestBody List<Task> tasks) {
+    public User editUser(@PathVariable String username) {
         System.out.println("hej");
-        return userService.editUser(username, tasks);
+        return null;
     }
 }
