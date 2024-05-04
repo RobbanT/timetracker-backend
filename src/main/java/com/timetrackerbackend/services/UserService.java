@@ -46,6 +46,7 @@ public class UserService {
     // Spara ändringar för en användares uppgifter.
     public User editUser(String username, List<Task> tasks) {
         Query query = new Query();
+        System.out.println("hej");
         query.addCriteria(Criteria.where("username").is(username));
         // Kontrollerar så att det inte finns tasks med samma titel.
         for (Task task1 : tasks) {
