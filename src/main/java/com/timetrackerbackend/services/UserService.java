@@ -51,6 +51,7 @@ public class UserService {
     // Spara ändringar för en användares uppgifter. Används när en användare vill
     // göra någon form av förändringar på sina uppgifter.
     public User editUser(User user) {
+        System.out.println(user.getTasks());
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(user.getUsername()));
         // Kontrollerar så att det inte finns tasks med samma titel. Är det så så
