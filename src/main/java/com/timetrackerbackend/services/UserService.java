@@ -19,15 +19,18 @@ public class UserService {
         this.mongoOperations = mongoOperations;
     }
 
-    // Returnerar alla användare!
+    // Returnerar alla användare.
     public List<User> getUsers() {
         return mongoOperations.findAll(User.class);
     }
 
-    // Returnerar angiven användare. Finns ingen användare returnerar vi null.
+    // Returnerar angiven användare. Finns inte en användare med angivet
+    // användarnamn och lösenord returnerar vi null. Används när en användare vill
+    // logga in.
     public User getUser(String username, String password) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
+
         return mongoOperations.findOne(query, User.class) != null
                 && bcryptEncoder.matches(password, mongoOperations.findOne(query, User.class).getPassword())
                         ? mongoOperations.findOne(query, User.class)
@@ -35,21 +38,24 @@ public class UserService {
     }
 
     // Finns det redan en användare med ett visst användarnamn? Då returnerar vi
-    // null. Ingen ny användare skapas.
+    // null. Ingen ny användare skapas. Används när en ny användare vill registrera
+    // sig.
     public User setUser(User user) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("username").is(user.username));
+        query.addCriteria(Criteria.where("username").is(user.getUsername()));
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
+
         return mongoOperations.findOne(query, User.class) != null ? null : mongoOperations.insert(user);
     }
 
-    // Spara ändringar för en användares uppgifter.
+    // Spara ändringar för en användares uppgifter. Används när en användare vill
+    // göra någon form av förändringar på sina uppgifter.
     public User editUser(User user) {
         Query query = new Query();
-        System.out.println(user.getTasks());
-        System.out.println("hej");
-        query.addCriteria(Criteria.where("username").is(user.username));
-        // Kontrollerar så att det inte finns tasks med samma titel.
+        query.addCriteria(Criteria.where("username").is(user.getUsername()));
+
+        // Kontrollerar så att det inte finns tasks med samma titel. Är det så så
+        // returnerar vi null.
         for (Task task1 : user.getTasks()) {
             int count = 0;
             for (Task task2 : user.getTasks()) {
@@ -60,6 +66,7 @@ public class UserService {
                 }
             }
         }
+
         mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
         return mongoOperations.findOne(query, User.class);
     }

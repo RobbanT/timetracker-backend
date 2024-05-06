@@ -1,11 +1,10 @@
 package com.timetrackerbackend.models;
 
 public final class Task {
-    private String title, date, startTime, endTime;
+    private String title, startTime, endTime;
 
-    public Task(String title, String date) {
+    public Task(String title) {
         this.title = title;
-        this.date = date;
         this.startTime = null;
         this.endTime = null;
     }
@@ -16,14 +15,6 @@ public final class Task {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public String getStartTime() {
