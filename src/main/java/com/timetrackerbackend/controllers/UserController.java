@@ -31,7 +31,6 @@ public class UserController {
 
     @PatchMapping("/user")
     public User editUser(@RequestBody User user) {
-        System.out.println("hej");
         return userService.editUser(user);
     }
 }
