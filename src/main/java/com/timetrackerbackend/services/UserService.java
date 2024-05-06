@@ -53,7 +53,7 @@ public class UserService {
     public User editUser(User user) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(user.getUsername()));
-
+        System.out.println(user.getTasks());
         // Kontrollerar så att det inte finns tasks med samma titel. Är det så så
         // returnerar vi null.
         for (Task task1 : user.getTasks()) {
