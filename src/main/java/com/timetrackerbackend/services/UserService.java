@@ -59,13 +59,12 @@ public class UserService {
     // Skapar uppgift. Returnerar null om en uppgift med samma titel redan
     // existerar.
     public Task setTask(String username, String title) {
-        User user = findUser(username);
-
-        if (findTask(user.getTasks(), title) == null) {
-            user.getTasks().add(new Task(title));
+        if (findTask(findUser(username).getTasks(), title) == null) {
+            findUser(username).getTasks().add(new Task(title));
             Query query = new Query();
             query.addCriteria((Criteria.where("username").is(username)));
-            mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
+            mongoOperations.updateFirst(query, Update.update("tasks",
+                    findUser(username).getTasks()), User.class);
             return new Task(title);
         } else {
             return null;
