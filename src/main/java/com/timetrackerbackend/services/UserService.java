@@ -76,7 +76,6 @@ public class UserService {
 
     public Task deleteTask(String username, String title) {
         User user = findUser(username);
-        Task task;
 
         for (Task task : user.getTasks()) {
             if (task.getTitle().equals(title)) {
