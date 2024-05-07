@@ -21,7 +21,6 @@ public class UserService {
     private User findUser(String username) {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
-        System.out.println(mongoOperations.findOne(query, User.class));
         return mongoOperations.findOne(query, User.class);
     }
 
@@ -61,12 +60,11 @@ public class UserService {
     // existerar.
     public Task setTask(String username, String title) {
         User user = findUser(username);
-        Task task = findTask(user.getTasks(), title);
 
-        if (task == null) {
+        if (findTask(user.getTasks(), title) == null) {
             user.getTasks().add(new Task(title));
             Query query = new Query();
-            query.addCriteria((Criteria.where(username).is(username)));
+            query.addCriteria((Criteria.where("username").is(username)));
             mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
             return new Task(title);
         } else {
