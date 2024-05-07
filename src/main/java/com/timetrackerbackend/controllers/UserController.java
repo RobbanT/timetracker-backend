@@ -35,6 +35,7 @@ public class UserController {
     // Skapar uppgift
     @PostMapping("/user/{username}/task/{title}")
     public Task setTask(@PathVariable String username, @PathVariable String title) {
+        System.out.println("hej");
         return new Task(title);
     }
 
