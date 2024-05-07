@@ -53,7 +53,7 @@ public class UserService {
     // registrera sig.
     public User setUser(User user) {
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return findUser(user.getUsername()) != null ? null : mongoOperations.insert(user);
+        return findUser(user.getUsername()) != null ? mongoOperations.insert(user) : null;
     }
 
     // Skapar uppgift. Returnerar null om en uppgift med samma titel redan
