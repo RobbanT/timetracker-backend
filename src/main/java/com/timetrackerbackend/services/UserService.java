@@ -63,11 +63,10 @@ public class UserService {
         Task task = findTask(user.getTasks(), title);
 
         if (task == null) {
+            user.getTasks().add(new Task(title));
             Query query = new Query();
             query.addCriteria((Criteria.where(username).is(username)));
-            mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks().add(new Task(title))),
-                    User.class);
-
+            mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
             return new Task(title);
         } else {
             return null;
