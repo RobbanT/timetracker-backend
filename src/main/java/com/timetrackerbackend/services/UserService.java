@@ -20,7 +20,7 @@ public class UserService {
 
     private User findUser(String username) {
         Query query = new Query();
-        query.addCriteria(Criteria.where(username).is(username));
+        query.addCriteria(Criteria.where("username").is(username));
         System.out.println(mongoOperations.findOne(query, User.class));
         return mongoOperations.findOne(query, User.class);
     }
