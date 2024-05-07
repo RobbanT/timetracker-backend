@@ -46,7 +46,7 @@ public class UserController {
 
     // Ändrar uppgift
     @PatchMapping("/user/{username}/task")
-    public Task editTask(@RequestBody Task task) {
-        return userService.editTask(task);
+    public Task editTask(@PathVariable String username, @RequestBody Task changedTask) {
+        return userService.editTask(username, changedTask);
     }
 }

@@ -76,10 +76,12 @@ public class UserService {
         }
     }
 
+    // Tar bort uppgift. Returnerar null om en uppgift med samma titel inte
+    // existerar.
     public Task deleteTask(String username, String title) {
         User user = findUser(username);
         Task task = findTask(user.getTasks(), title);
-        if (task == null) {
+        if (task != null) {
             user.getTasks().remove(task);
             updateTasks(user);
             return task;
@@ -88,9 +90,16 @@ public class UserService {
         }
     }
 
-    public Task editTask(Task task) {
-
-        return task;
+    public Task editTask(String username, Task changedTask) {
+        User user = findUser(username);
+        Task task = findTask(user.getTasks(), changedTask.getTitle());
+        if (task != null) {
+            user.getTasks().set(user.getTasks().indexOf(task), changedTask);
+            updateTasks(user);
+            return changedTask;
+        } else {
+            return null;
+        }
     }
 }
 /*
