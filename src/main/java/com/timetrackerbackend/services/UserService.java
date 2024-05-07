@@ -24,6 +24,15 @@ public class UserService {
         return mongoOperations.findOne(query, User.class);
     }
 
+    private Task findTask(List<Task> tasks, String title) {
+        for (Task task : tasks) {
+            if (task.getTitle().equals(title)) {
+                return task;
+            }
+        }
+        return null;
+    }
+
     // Returnerar alla användare.
     public List<User> getUsers() {
         return mongoOperations.findAll(User.class);
@@ -51,23 +60,23 @@ public class UserService {
     // existerar.
     public Task setTask(String username, String title) {
         User user = findUser(username);
+        Task task = findTask(user.getTasks(), title);
 
-        for (Task task : user.getTasks()) {
-            if (task.getTitle().equals(title)) {
-                return null;
-            }
+        if (task == null) {
+            Query query = new Query();
+            query.addCriteria((Criteria.where(username).is(username)));
+            mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks().add(new Task(title))),
+                    User.class);
+
+            return new Task(title);
+        } else {
+            return null;
         }
-
-        user.getTasks().add(new Task(title));
-        mongoOperations.updateFirst(new Query().addCriteria(Criteria.where(username)
-                .is(username)), Update.update("tasks", user.getTasks()),
-                User.class);
-
-        return new Task(title);
     }
 
     public Task deleteTask(String username, String title) {
         User user = findUser(username);
+        Task task;
 
         for (Task task : user.getTasks()) {
             if (task.getTitle().equals(title)) {
