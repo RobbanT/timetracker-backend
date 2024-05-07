@@ -51,6 +51,7 @@ public class UserService {
     // Skapar uppgift. Returnerar null om en uppgift med samma titel redan
     // existerar.
     public Task setTask(String username, String title) {
+        System.out.println(username + " " + title);
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(username));
         User user = mongoOperations.findOne(query, User.class);
