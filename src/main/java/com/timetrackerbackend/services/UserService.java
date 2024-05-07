@@ -33,6 +33,12 @@ public class UserService {
         return null;
     }
 
+    private void updateTasks(User user) {
+        Query query = new Query();
+        query.addCriteria((Criteria.where("username").is(user.getUsername())));
+        mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
+    }
+
     // Returnerar alla användare.
     public List<User> getUsers() {
         return mongoOperations.findAll(User.class);
@@ -60,12 +66,9 @@ public class UserService {
     // existerar.
     public Task setTask(String username, String title) {
         User user = findUser(username);
-
-        if (findTask(findUser(username).getTasks(), title) == null) {
+        if (findTask(user.getTasks(), title) == null) {
             user.getTasks().add(new Task(title));
-            Query query = new Query();
-            query.addCriteria((Criteria.where("username").is(username)));
-            mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
+            updateTasks(user);
             return new Task(title);
         } else {
             return null;
