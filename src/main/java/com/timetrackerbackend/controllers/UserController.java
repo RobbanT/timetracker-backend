@@ -35,7 +35,7 @@ public class UserController {
     // Skapar uppgift
     @PostMapping("/user/{username}/task/{title}")
     public Task setTask(@PathVariable String username, @PathVariable String title) {
-        return setTask(username, title);
+        return new Task(title);
     }
 
     // Tar bort uppgift
