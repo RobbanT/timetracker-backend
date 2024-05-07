@@ -41,17 +41,12 @@ public class UserController {
     // Tar bort uppgift
     @DeleteMapping("/user/{username}/task/{title}")
     public Task deleteTask(@PathVariable String username, @PathVariable String title) {
-        return new Task("title");
+        return userService.deleteTask(username, title);
     }
 
     // Ändrar uppgift
-    @DeleteMapping("/user/{username}/task")
-    public Task deleteTask(@RequestBody User user) {
-        return new Task("title");
-    }
-
-    @PatchMapping("/user")
-    public User editUser(@RequestBody User user) {
-        return userService.editUser(user);
+    @PatchMapping("/user/{username}/task")
+    public Task editTask(@RequestBody Task task) {
+        return userService.editTask(task);
     }
 }
