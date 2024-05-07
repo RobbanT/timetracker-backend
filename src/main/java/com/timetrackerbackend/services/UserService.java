@@ -48,6 +48,24 @@ public class UserService {
         return mongoOperations.findOne(query, User.class) != null ? null : mongoOperations.insert(user);
     }
 
+    // Skapar uppgift. Returnerar null om en uppgift med samma titel redan
+    // existerar.
+    public Task setTask(String username, String title) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username));
+        User user = mongoOperations.findOne(query, User.class);
+
+        for (Task task : user.getTasks()) {
+            if (task.getTitle() == title) {
+                return null;
+            }
+        }
+
+        user.getTasks().add(new Task(title));
+        mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()), User.class);
+        return new Task(title);
+    }
+
     // Spara ändringar för en användares uppgifter. Används när en användare vill
     // göra någon form av förändringar på sina uppgifter.
     public User editUser(User user) {
