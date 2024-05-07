@@ -66,8 +66,7 @@ public class UserService {
     // existerar.
     public Task setTask(String username, String title) {
         User user = findUser(username);
-        Task task = findTask(user.getTasks(), title);
-        if (task == null) {
+        if (findTask(user.getTasks(), title) == null) {
             user.getTasks().add(new Task(title));
             updateTasks(user);
             return new Task(title);
@@ -90,6 +89,7 @@ public class UserService {
         }
     }
 
+    // Används för att uppdatera påbörjad och avslutad tid hos en uppgift.
     public Task editTask(String username, Task changedTask) {
         User user = findUser(username);
         Task task = findTask(user.getTasks(), changedTask.getTitle());
@@ -102,28 +102,3 @@ public class UserService {
         }
     }
 }
-/*
- * // Spara ändringar för en användares uppgifter. Används när en användare vill
- * // göra någon form av förändringar på sina uppgifter.
- * public User editUser(User user) {
- * System.out.println(user.getTasks());
- * Query query = new Query();
- * query.addCriteria(Criteria.where("username").is(user.getUsername()));
- * // Kontrollerar så att det inte finns tasks med samma titel. Är det så så
- * // returnerar vi null.
- * for (Task task1 : user.getTasks()) {
- * int count = 0;
- * for (Task task2 : user.getTasks()) {
- * if (task1.getTitle().equals(task2.getTitle())) {
- * if (++count > 1) {
- * return null;
- * }
- * }
- * }
- * }
- * 
- * mongoOperations.updateFirst(query, Update.update("tasks", user.getTasks()),
- * User.class);
- * return mongoOperations.findOne(query, User.class);
- * }
- */
