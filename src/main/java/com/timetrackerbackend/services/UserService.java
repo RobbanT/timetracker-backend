@@ -66,7 +66,8 @@ public class UserService {
     // existerar.
     public Task setTask(String username, String title) {
         User user = findUser(username);
-        if (findTask(user.getTasks(), title) == null) {
+        Task task = findTask(user.getTasks(), title);
+        if (task == null) {
             user.getTasks().add(new Task(title));
             updateTasks(user);
             return new Task(title);
@@ -77,15 +78,14 @@ public class UserService {
 
     public Task deleteTask(String username, String title) {
         User user = findUser(username);
-
-        for (Task task : user.getTasks()) {
-            if (task.getTitle().equals(title)) {
-                return null;
-            }
+        Task task = findTask(user.getTasks(), title);
+        if (task == null) {
+            user.getTasks().remove(task);
+            updateTasks(user);
+            return task;
+        } else {
+            return null;
         }
-
-        user.getTasks().removeIf((task) -> task.getTitle().equals(title));
-        return new Task(username);
     }
 
     public Task editTask(Task task) {
