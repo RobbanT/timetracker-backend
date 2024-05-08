@@ -5,8 +5,8 @@ public final class Task {
 
     public Task(String title) {
         this.title = title;
-        this.startTime = null;
-        this.endTime = null;
+        this.startTime = "";
+        this.endTime = "";
     }
 
     public String getTitle() {
