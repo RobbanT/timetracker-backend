@@ -49,4 +49,10 @@ public class UserController {
     public Task editTask(@PathVariable String username, @RequestBody Task changedTask) {
         return userService.editTask(username, changedTask);
     }
+
+    // Hämtar alla uppgifter.
+    @GetMapping("/user/{username}/tasks")
+    public List<Task> editTask(@PathVariable String username) {
+        return userService.getTasks(username);
+    }
 }

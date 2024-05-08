@@ -101,4 +101,9 @@ public class UserService {
             return null;
         }
     }
+
+    // Returnerar alla uppgifter för en användare.
+    public List<Task> getTasks(String username) {
+        return findUser(username).getTasks();
+    }
 }
