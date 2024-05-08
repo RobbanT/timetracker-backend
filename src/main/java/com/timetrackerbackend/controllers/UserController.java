@@ -52,7 +52,7 @@ public class UserController {
 
     // Hämtar alla uppgifter.
     @GetMapping("/user/{username}/tasks")
-    public List<Task> editTask(@PathVariable String username) {
+    public List<Task> getTasks(@PathVariable String username) {
         return userService.getTasks(username);
     }
 }
