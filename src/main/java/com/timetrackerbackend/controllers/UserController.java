@@ -53,6 +53,7 @@ public class UserController {
     // Hämtar alla uppgifter.
     @GetMapping("/user/{username}/tasks")
     public List<Task> getTasks(@PathVariable String username) {
+        System.out.println("hej");
         return userService.getTasks(username);
     }
 }
