@@ -91,9 +91,9 @@ public class UserService {
 
     // Används för att uppdatera påbörjad och avslutad tid hos en uppgift.
     public Task editTask(String username, Task changedTask) {
+        System.out.println("hejhej");
         User user = findUser(username);
         Task task = findTask(user.getTasks(), changedTask.getTitle());
-        System.out.println(task.getTitle());
 
         if (task != null) {
             user.getTasks().set(user.getTasks().indexOf(task), changedTask);
