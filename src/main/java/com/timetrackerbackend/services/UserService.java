@@ -3,6 +3,7 @@ package com.timetrackerbackend.services;
 import java.util.*;
 import com.timetrackerbackend.models.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,9 +100,9 @@ public class UserService {
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
             if (task.getStartTime().equals("")) {
-                task.setStartTime(LocalDateTime.now(ZoneOffset.systemDefault()).toString());
+                task.setStartTime(LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toString());
             } else {
-                task.setEndTime(LocalDateTime.now(ZoneOffset.systemDefault()).toString());
+                task.setEndTime(LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toString());
             }
             updateTasks(user);
             return task;
