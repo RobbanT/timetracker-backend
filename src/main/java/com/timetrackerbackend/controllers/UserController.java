@@ -46,9 +46,10 @@ public class UserController {
 
     // Ändrar uppgift
     @PatchMapping("/user/{username}/task")
-    public Task editTask(@PathVariable String username, @RequestBody Task changedTask) {
+    public Task editTask(@PathVariable String username) {
         System.out.println("hej");
-        return userService.editTask(username, changedTask);
+        return null;
+        // return userService.editTask(username, changedTask);
     }
 
     // Hämtar alla uppgifter.
