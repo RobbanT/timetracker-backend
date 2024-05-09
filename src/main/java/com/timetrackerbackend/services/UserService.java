@@ -96,11 +96,9 @@ public class UserService {
         Task task = findTask(user.getTasks(), title);
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
-            if (task.getStartTime() == "") {
-                System.out.println("Sätter starttid");
+            if (task.getStartTime().equals("")) {
                 task.setStartTime(LocalDateTime.now().toString());
             } else {
-                System.out.println("Sätter sluttid");
                 task.setEndTime(LocalDateTime.now().toString());
             }
             updateTasks(user);
