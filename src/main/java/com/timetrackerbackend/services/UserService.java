@@ -1,7 +1,8 @@
 package com.timetrackerbackend.services;
 
-import java.util.List;
+import java.util.*;
 import com.timetrackerbackend.models.*;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.*;
@@ -90,15 +91,18 @@ public class UserService {
     }
 
     // Används för att uppdatera påbörjad och avslutad tid hos en uppgift.
-    public Task editTask(String username, Task changedTask) {
-        System.out.println("hejhej");
+    public Task editTask(String username, String title) {
         User user = findUser(username);
-        Task task = findTask(user.getTasks(), changedTask.getTitle());
-
+        Task task = findTask(user.getTasks(), title);
         if (task != null) {
-            user.getTasks().set(user.getTasks().indexOf(task), changedTask);
+            user.getTasks().removeIf(t -> (t.getTitle() == title));
+            if (task.getStartTime() == "") {
+                task.setStartTime(LocalDateTime.now().toString());
+            } else {
+                task.setEndTime(LocalDateTime.now().toString());
+            }
             updateTasks(user);
-            return changedTask;
+            return task;
         } else {
             return null;
         }
