@@ -100,9 +100,9 @@ public class UserService {
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
             if (task.getStartTime().equals("")) {
-                task.setStartTime(LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toString());
+                task.setStartTime(LocalDateTime.now(ZoneId.of("Europe/Paris")).toString());
             } else {
-                task.setEndTime(LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toString());
+                task.setEndTime(LocalDateTime.now(ZoneId.of("Europe/Paris")).toString());
             }
             updateTasks(user);
             return task;
