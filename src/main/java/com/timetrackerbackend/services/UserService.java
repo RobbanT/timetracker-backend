@@ -93,6 +93,8 @@ public class UserService {
     public Task editTask(String username, Task changedTask) {
         User user = findUser(username);
         Task task = findTask(user.getTasks(), changedTask.getTitle());
+        System.out.println(task.getTitle());
+
         if (task != null) {
             user.getTasks().set(user.getTasks().indexOf(task), changedTask);
             updateTasks(user);
