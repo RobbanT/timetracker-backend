@@ -99,9 +99,9 @@ public class UserService {
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
             if (task.getStartTime().equals("")) {
-                task.setStartTime(LocalDateTime.now(ZoneOffset.UTC).toString());
+                task.setStartTime(LocalDateTime.now(ZoneOffset.systemDefault()).toString());
             } else {
-                task.setEndTime(LocalDateTime.now(ZoneOffset.UTC).toString());
+                task.setEndTime(LocalDateTime.now(ZoneOffset.systemDefault()).toString());
             }
             updateTasks(user);
             return task;
