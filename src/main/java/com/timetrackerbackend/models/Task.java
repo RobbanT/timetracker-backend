@@ -1,6 +1,6 @@
 package com.timetrackerbackend.models;
 
-public final class Task {
+public class Task {
     private String title, startTime, endTime;
 
     public Task(String title) {
