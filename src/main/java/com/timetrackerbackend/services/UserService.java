@@ -3,6 +3,8 @@ package com.timetrackerbackend.services;
 import java.util.*;
 import com.timetrackerbackend.models.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.*;
@@ -97,9 +99,9 @@ public class UserService {
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
             if (task.getStartTime().equals("")) {
-                task.setStartTime(LocalDateTime.now().toString());
+                task.setStartTime(LocalDateTime.now(ZoneOffset.UTC).toString());
             } else {
-                task.setEndTime(LocalDateTime.now().toString());
+                task.setEndTime(LocalDateTime.now(ZoneOffset.UTC).toString());
             }
             updateTasks(user);
             return task;
