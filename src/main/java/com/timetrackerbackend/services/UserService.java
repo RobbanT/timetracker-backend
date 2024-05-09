@@ -97,8 +97,10 @@ public class UserService {
         if (task != null) {
             user.getTasks().removeIf(t -> (t.getTitle() == title));
             if (task.getStartTime() == "") {
+                System.out.println("Sätter starttid");
                 task.setStartTime(LocalDateTime.now().toString());
             } else {
+                System.out.println("Sätter sluttid");
                 task.setEndTime(LocalDateTime.now().toString());
             }
             updateTasks(user);
